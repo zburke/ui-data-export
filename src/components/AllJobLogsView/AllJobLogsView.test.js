@@ -5,18 +5,19 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import '../../../test/jest/__mock__';
+import '../../../test/jest/__new_mock__';
 
 import {
   buildResources,
   buildMutator,
 } from '@folio/stripes-data-transfer-components/testUtils';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import commonTranslations from '@folio/stripes-data-transfer-components/translations/stripes-data-transfer-components/en';
+// import commonTranslations from '@folio/stripes-data-transfer-components/translations/stripes-data-transfer-components/en';
 
 import { AllJobLogsViewComponent } from '.';
 import { translationsProperties } from '../../../test/helpers';
 import { SettingsComponentBuilder } from '../../../test/jest/helpers';
-import translations from '../../../translations/ui-data-export/en';
+// import translations from '../../../translations/ui-data-export/en';
 import { logJobExecutions } from '../../../test/bigtest/network/scenarios/fetch-job-executions-success';
 
 const renderAllJobLogsViewContainer = () => {
@@ -38,8 +39,8 @@ describe('AllJobLogsView', () => {
   it('should display logs list', () => {
     renderAllJobLogsViewContainer();
 
-    expect(screen.getByText('Logs'));
-    expect(screen.getByText('3 records found')).toBeVisible();
+    expect(screen.getByText(/logs/));
+    expect(screen.getByText(/searchResultsCountHeader/)).toBeVisible();
   });
 
   it('should be sorted by "completedDate" descending', () => {
@@ -53,10 +54,10 @@ describe('AllJobLogsView', () => {
   it('should render list columns', () => {
     renderAllJobLogsViewContainer();
 
-    expect(screen.getByText(commonTranslations.jobExecutionHrId)).toBeVisible();
-    expect(screen.getByText(translations.total)).toBeVisible();
-    expect(screen.getByText(commonTranslations.runBy)).toBeVisible();
-    expect(screen.getByText(translations.failed)).toBeVisible();
+    expect(screen.getByText(/jobExecutionHrId/)).toBeVisible();
+    expect(screen.getByText(/total/)).toBeVisible();
+    expect(screen.getByText(/runBy/)).toBeVisible();
+    expect(screen.getByText(/failed/)).toBeVisible();
   });
 
   describe('clicking on status column header', () => {
@@ -75,7 +76,7 @@ describe('AllJobLogsView', () => {
 
       userEvent.click(screen.getByRole('gridcell', { name: 'import-1.mrc' }));
 
-      expect(screen.getByRole('gridcell', { name: 'Fail' })).toBeVisible();
+      expect(screen.getByRole('gridcell', { name: /fail/ })).toBeVisible();
     });
   });
 });
